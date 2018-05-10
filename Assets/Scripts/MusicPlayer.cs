@@ -11,7 +11,7 @@ public class MusicPlayer : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         Invoke("LoadFirstLevel", 2f);
 	}
