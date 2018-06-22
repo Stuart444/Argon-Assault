@@ -4,34 +4,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class Player : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
     // Movement related variables
-    [Tooltip("In meters per second")][SerializeField] float speed = 10f;
+    [Header("General")]
+    [Tooltip("In meters per second")][SerializeField] float controlSpeed = 10f;
     [Tooltip("In meters")][SerializeField] float xRange = 5f;
     [Tooltip("In meters")][SerializeField] float yRange = 5f;
 
-    // Controls the Pitch of the ship when moving up/down so as to always be shooting forward
-    [Tooltip("How much pitch when moving up/down")][SerializeField] float posPitchFactor = -6f;
-    // Controls the pitch of the ship temp when button is pushed so it looks like it's
-    // going up/down on the nose when moving up/down
-    [SerializeField] float controlPitchFactor = -30f;
+    [Header("Screen-position based")]
+    [Tooltip("How much pitch when moving up/down")] [SerializeField] float posPitchFactor = -6f;
     [SerializeField] float posYawFactor = 6f;
+
+    [Header("Control-throw based")]
+    [SerializeField] float controlPitchFactor = -30f;
     [SerializeField] float controlRollFactor = -30f;
 
     // To move ship around
     float xThrow, yThrow;
-
-    // Use this for initialization
-    void Start()
-    {
-		
-	}
+    bool isControlsEnabled = true;
 	
 	// Update is called once per frame
 	void Update()
     {
-        HandleMovement();
+        if (isControlsEnabled)
+        {
+            HandleMovement();
+        }
     }
 
     /// <summary>
@@ -68,8 +67,8 @@ public class Player : MonoBehaviour {
         yThrow = CrossPlatformInputManager.GetAxis("Vertical");
 
         // works out how many meters needed to move in this current frame
-        float xOffset = xThrow * speed * Time.deltaTime;
-        float yOffset = yThrow * speed * Time.deltaTime;
+        float xOffset = xThrow * controlSpeed * Time.deltaTime;
+        float yOffset = yThrow * controlSpeed * Time.deltaTime;
         float rawXPos = transform.localPosition.x + xOffset;
         float rawYPos = transform.localPosition.y + yOffset;
 
@@ -80,4 +79,10 @@ public class Player : MonoBehaviour {
         transform.localPosition = new Vector3(clampedXPos, clampedYPos, transform.localPosition.z);
     }
     #endregion
+
+    void OnPlayerDeath() // Called via String Reference
+    {
+        isControlsEnabled = false;
+        print("Controls frozen");
+    }
 }
