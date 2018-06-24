@@ -6,16 +6,20 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
     [SerializeField] GameObject deathFX;
-    [SerializeField] Transform parent;
+    [SerializeField] Transform parentSpawned;
+    [SerializeField] int scorePerHit = 12;
+
+    ScoreBoard scoreBoard;
 
     bool isDead; // False by Default
 
 	// Use this for initialization
 	void Start () {
-        AddNonTriggerBoxCollider();
+        AddBoxCollider();
+        scoreBoard = FindObjectOfType<ScoreBoard>();
 	}
 
-    private void AddNonTriggerBoxCollider()
+    private void AddBoxCollider()
     {
         Collider boxCollider = gameObject.AddComponent<BoxCollider>();
         boxCollider.isTrigger = false;
@@ -27,9 +31,10 @@ public class Enemy : MonoBehaviour {
         if (!isDead)
         {
             isDead = true;
+            scoreBoard.ScoreHit(scorePerHit);
             print("Hit: " + gameObject.name);
             GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity);
-            fx.transform.parent = parent;
+            fx.transform.parent = parentSpawned;
             Destroy(gameObject);
         }
     }
