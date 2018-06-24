@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: 4681861674969748}
   - component: {fileID: 33231180645269380}
   - component: {fileID: 23941269504025160}
+  - component: {fileID: 114586577562894738}
   m_Layer: 0
-  m_Name: StarSparrow7
+  m_Name: Enemy_Ship_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,3 +83,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1358106744389424}
   m_Mesh: {fileID: 4300012, guid: add769d179a9826498fc063c005d35bd, type: 3}
+--- !u!114 &114586577562894738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1358106744389424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468712789d0d89d4aa783c3b3e42848e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathFX: {fileID: 1775025632201986, guid: f61f4f9e2723a6b49811285e5640efeb, type: 2}
+  parentSpawned: {fileID: 4226625495190234, guid: 12fbc3cb82b594d42b6e93c87fab858d,
+    type: 2}
+  scorePerHit: 100
